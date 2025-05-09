@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    const lang = navigator.language || navigator.userLanguage;
+
+    if (lang.startsWith('en')) {
+      window.location.href = 'https://airbnb1.fillout.com/b';
+    } else if (lang.startsWith('id')) {
+      window.location.href = 'https://forms.fillout.com/t/ВАША_ИНДОНЕЗИЙСКАЯ_ФОРМА';
+    } else {
+      window.location.href = 'https://forms.fillout.com/t/ВАША_АНГЛИЙСКАЯ_ФОРМА';
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecting to the correct language version...</p>
+</body>
+</html>
