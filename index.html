@@ -6,34 +6,28 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('r') || '';
+    const type = urlParams.get('t') === 'p' ? 'p' : 'o'; // 'p' = плохой отзыв, 'o' = обычный
 
-    const lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+    const supportedLangs = ['ru', 'hi', 'ar', 'he', 'tr', 'uk', 'pl', 'zh', 'ko', 'fr', 'de', 'cs', 'vi', 'sk'];
 
-    const langMap = {
-      'ru': 'rup',
-      'hi': 'hip',
-      'ar': 'arp',
-      'he': 'hep',
-      'tr': 'trp',
-      'uk': 'ukp',
-      'pl': 'plp',
-      'zh': 'zhp',
-      'ko': 'kop',
-      'fr': 'frp',
-      'de': 'dep',
-      'cs': 'czp' // чешский
-    };
+    const langs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
+    let langPrefix = 'en'; // язык по умолчанию — английский
 
-    let redirectPath = 'enp'; // по умолчанию английский
-
-    for (const key in langMap) {
-      if (lang.startsWith(key)) {
-        redirectPath = langMap[key];
+    for (const lang of langs) {
+      const shortLang = lang.toLowerCase().split('-')[0];
+      if (supportedLangs.includes(shortLang)) {
+        langPrefix = shortLang;
         break;
       }
     }
 
-    let targetUrl = 'https://airbnb1.fillout.com/' + redirectPath;
+    // Поддержка cs → cz
+    if (langPrefix === 'cs') {
+      langPrefix = 'cz';
+    }
+
+    const formCode = langPrefix + type; // например: rup или ruo или enp/eno
+    let targetUrl = 'https://airbnb1.fillout.com/' + formCode;
 
     if (code) {
       targetUrl += '?r=' + encodeURIComponent(code);
