@@ -4,30 +4,41 @@
   <meta charset="UTF-8">
   <title>Redirecting...</title>
   <script>
-    // Получаем код из URL
     const urlParams = new URLSearchParams(window.location.search);
-    const r = urlParams.get('r') || '';
+    const code = urlParams.get('r') || '';
 
-    // Определяем язык
     const lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
 
-    // Подставляем ссылку в зависимости от языка
-    let targetUrl = '';
+    const langMap = {
+      'ru': 'rup',
+      'hi': 'hip',
+      'ar': 'arp',
+      'he': 'hep',
+      'tr': 'trp',
+      'uk': 'ukp',
+      'pl': 'plp',
+      'zh': 'zhp',
+      'ko': 'kop',
+      'fr': 'frp',
+      'de': 'dep',
+      'cs': 'czp' // чешский
+    };
 
-    if (lang.startsWith('ru')) {
-      targetUrl = 'https://airbnb1.fillout.com/b';
-    } else if (lang.startsWith('id')) {
-      targetUrl = 'https://forms.fillout.com/t/ВАША_ИНДОНЕЗИЙСКАЯ_ФОРМА';
-    } else {
-      targetUrl = 'https://forms.fillout.com/t/ВАША_АНГЛИЙСКАЯ_ФОРМА';
+    let redirectPath = 'enp'; // по умолчанию английский
+
+    for (const key in langMap) {
+      if (lang.startsWith(key)) {
+        redirectPath = langMap[key];
+        break;
+      }
     }
 
-    // Добавляем код бронирования к ссылке
-    if (r) {
-      targetUrl += '?r=' + encodeURIComponent(r);
+    let targetUrl = 'https://airbnb1.fillout.com/' + redirectPath;
+
+    if (code) {
+      targetUrl += '?r=' + encodeURIComponent(code);
     }
 
-    // Перенаправление
     window.location.href = targetUrl;
   </script>
 </head>
