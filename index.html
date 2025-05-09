@@ -6,7 +6,7 @@
   <script>
     // Получаем код из URL
     const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code') || '';
+    const r = urlParams.get('r') || '';
 
     // Определяем язык
     const lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
@@ -23,8 +23,8 @@
     }
 
     // Добавляем код бронирования к ссылке
-    if (code) {
-      targetUrl += '?code=' + encodeURIComponent(code);
+    if (r) {
+      targetUrl += '?r=' + encodeURIComponent(r);
     }
 
     // Перенаправление
